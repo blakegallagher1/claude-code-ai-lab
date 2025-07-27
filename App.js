@@ -1,4 +1,5 @@
 const { useState, useEffect } = React;
+const API_BASE = 'https://claude-code-ai-lab.onrender.com';
 
 function App() {
   const [tasks, setTasks] = React.useState([]);
@@ -8,7 +9,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
 
   async function register() {
-    await fetch('/auth/register', {
+    await fetch(`${API_BASE}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
@@ -17,7 +18,7 @@ function App() {
   }
 
   async function login() {
-    const res = await fetch('/auth/login', {
+    const res = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
@@ -31,7 +32,7 @@ function App() {
   }
 
   async function loadTasks() {
-    const res = await fetch('/tasks', {
+    const res = await fetch(`${API_BASE}/tasks`, {
       headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
     });
     const data = await res.json();
@@ -39,7 +40,7 @@ function App() {
   }
 
   async function addTask() {
-    const res = await fetch('/tasks', {
+    const res = await fetch(`${API_BASE}/tasks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
