@@ -45,7 +45,7 @@ jobs:
 
       - name: Claude Code help
         run: |
-          claude-code --help || true
+      npx     claude-code --help || true
 
       - name: OpenAI CLI help
         env:
