@@ -30,7 +30,8 @@ jobs:
           if [ -f package.json ]; then npm install; fi
 
       - name: Run ESLint
-        if: ${{ exists('package.json') }}
+
+        
         run: |
           npx eslint . --ext .js,.ts || true
 
