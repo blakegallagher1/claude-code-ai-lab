@@ -41,17 +41,18 @@ jobs:
 
       - name: Run security scan (npm audit)
         run: |
-          npm audit --json || true
+      run: |
+    npm audit --json || true
 
-      - name: Claude Code help
-        run: |
-      npx     claude-code --help || true
+- name: Claude Code help
+  run: |
+         npx claude-code --help || true
 
-      - name: OpenAI CLI help
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          openai --help || true
+- name: OpenAI CLI help
+  env:
+    OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  run: |
+         openai --help || true
 
-      - name: Generate code review using GitHub Copilot (placeholder)
-        run: echo "Copilot Pro+ suggestions would go here."
+- name: Generate code review using GitHub Copilot (placeholder)
+    run: echo "Copilot Pro+ suggestions would go here."
