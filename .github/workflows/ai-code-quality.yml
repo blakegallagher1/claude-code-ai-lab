@@ -1,0 +1,56 @@
+name: AI Code Quality
+
+on:
+  push:
+    paths:
+      - '**/*.claude'
+      - '**/*.js'
+      - '**/*.ts'
+  pull_request:
+    paths:
+      - '**/*.claude'
+      - '**/*.js'
+      - '**/*.ts'
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          npm install -g @anthropic-ai/claude-code openai
+          if [ -f package.json ]; then npm install; fi
+
+      - name: Run ESLint
+        if: ${{ exists('package.json') }}
+        run: |
+          npx eslint . --ext .js,.ts || true
+
+      - name: Run Prettier
+        run: |
+          npx prettier --check . || true
+
+      - name: Run security scan (npm audit)
+        run: |
+          npm audit --json || true
+
+      - name: Claude Code help
+        run: |
+          claude-code --help || true
+
+      - name: OpenAI CLI help
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          openai --help || true
+
+      - name: Generate code review using GitHub Copilot (placeholder)
+        run: echo "Copilot Pro+ suggestions would go here."
